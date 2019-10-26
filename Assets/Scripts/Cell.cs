@@ -40,13 +40,14 @@ public class Cell : MonoBehaviour
     {
         coll = collision;
         needupdate = true;        
-        
+        //coll.gameObject.transform.parent.GetComponent<Radiation>().Cells.Add(gameObject);
+        coll.gameObject.transform.parent.GetComponent<Radiation>().AddToCells(gameObject);
     }
     private void OnTriggerExit2D(Collider2D collision)
     {
+        coll.gameObject.transform.parent.GetComponent<Radiation>().Cells.Remove(gameObject);
         coll = null;
         needupdate = false;
-
     }
     // Start is called before the first frame update
     void Start()
@@ -63,10 +64,11 @@ public class Cell : MonoBehaviour
             System.Console.WriteLine(distance);
             float intensity = coll.gameObject.transform.parent.GetComponent<Radiation>().Intensity;
             this.HP -= Mathf.Abs(GaussBellDistribution(distance, 1 / 3, intensity)) / 4;
-            Debug.Log(Mathf.Abs(GaussBellDistribution(distance, 1, intensity)));
+           // Debug.Log(Mathf.Abs(GaussBellDistribution(distance, 1, intensity)));
             if (this.HP < 0)
             {
-                Destroy(gameObject);
+                //Destroy(gameObject);
+                
 
             }
 
