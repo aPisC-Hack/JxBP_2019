@@ -83,8 +83,7 @@ public class Cell : MonoBehaviour
         if(collision.tag == "Ray"){
             coll = collision;
             needupdate = true;        
-        }
-        
+        }    
     }
     private void OnTriggerExit2D(Collider2D collision)
     {
