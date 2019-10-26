@@ -6,13 +6,14 @@ public class LaserHeadMovement : MonoBehaviour
 {
     
     public float Rotation;
-    Transform transform;
-    
+    public GameObject Radioation;
+    public GameObject RadiationPivot;
     private float sqrt2 = Mathf.Sqrt(2);
     // Start is called before the first frame update
     void Start()
     {
-        transform = GetComponent<Transform>();
+        Update();
+        GameObject.Instantiate(Radioation, RadiationPivot.transform.position, transform.rotation, transform);
     }
 
     // Update is called once per frame
