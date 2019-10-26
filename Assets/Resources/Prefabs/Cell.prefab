@@ -117,6 +117,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hP: 1000
+  deadSprites:
+  - {fileID: 21300000, guid: 2aacbaaafa4758f6487a6649d9e8d225, type: 3}
+  - {fileID: 21300000, guid: 0a0a726a7c89342ec8b5ab3404c6ddd7, type: 3}
+  - {fileID: 21300000, guid: bf1e466e058df1814a48ae985b643cf1, type: 3}
+  goodSprites:
+  - {fileID: 21300000, guid: f87196eda4982583085e045e3b1e3b0e, type: 3}
+  - {fileID: 21300000, guid: 54740f67808844ad5ac1cc8363cdd074, type: 3}
+  - {fileID: 21300000, guid: df17333bb5ba9cd43bdbab51edf3f7c3, type: 3}
+  badSprites:
+  - {fileID: 21300000, guid: ad53fb87b7133a986882aacb79276228, type: 3}
+  - {fileID: 21300000, guid: ce696b308075e0397b7b90e7be0ca0fc, type: 3}
+  - {fileID: 21300000, guid: 01e2cb878108be99d9e2a6aa36eaef33, type: 3}
+  SensibleSprites:
+  - {fileID: 21300000, guid: 14a0ec911d63be3a99974b7a5d65ae39, type: 3}
+  - {fileID: 21300000, guid: beadf1af7c628b008bde6c40b0f4b55c, type: 3}
+  - {fileID: 21300000, guid: 9cd1791c22598d00ca3104338d12c7c2, type: 3}
 --- !u!60 &2322558853308153016
 PolygonCollider2D:
   m_ObjectHideFlags: 0

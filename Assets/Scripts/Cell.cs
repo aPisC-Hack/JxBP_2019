@@ -4,13 +4,40 @@ using UnityEngine;
 
 public enum CellTypes
 {
-    important,
-    good,
-    cancer
+    Empty = 0,
+    Important = 1,
+    Good = 2,
+    Cancer = 3,
+    Dead = 4
 }
 
 public class Cell : MonoBehaviour
 {
+    private CellTypes cellType = CellTypes.Empty;
+    public CellTypes CellType { 
+        get {return cellType;} 
+        set{
+            if(value == CellTypes.Empty) Destroy(gameObject);
+            if(cellType != value){
+                switch (value)
+                {
+                    case CellTypes.Good:
+                        GetComponent<SpriteRenderer>().sprite = goodSprites[Random.Range(0, goodSprites.Length)];
+                        break;
+                    case CellTypes.Cancer:
+                        GetComponent<SpriteRenderer>().sprite = badSprites[Random.Range(0, badSprites.Length)];
+                        break;
+                    case CellTypes.Dead:
+                        GetComponent<SpriteRenderer>().sprite = deadSprites[Random.Range(0, deadSprites.Length)];
+                        break;
+                    case CellTypes.Important:
+                        GetComponent<SpriteRenderer>().sprite = SensibleSprites[Random.Range(0, SensibleSprites.Length)];
+                        break;
+                }
+            }
+            cellType = value;
+        } 
+    }
 
     Collider2D coll = null;
     private bool needupdate = false;
@@ -18,7 +45,11 @@ public class Cell : MonoBehaviour
 
     public float HP { get => hP; set => hP = value; }
 
-    public Sprite[] sprites;
+    public Sprite[] deadSprites;
+    public Sprite[] goodSprites;
+    public Sprite[] badSprites;
+    public Sprite[] SensibleSprites;
+
     
 
 
