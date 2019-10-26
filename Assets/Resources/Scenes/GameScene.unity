@@ -1327,6 +1327,11 @@ PrefabInstance:
       propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6124694506182672669, guid: ddaa5ccbd0da89a429c0f843fde18b66,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 6124694506182672670, guid: ddaa5ccbd0da89a429c0f843fde18b66,
         type: 3}
       propertyPath: width
