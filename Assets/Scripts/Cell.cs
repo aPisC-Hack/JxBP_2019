@@ -30,6 +30,12 @@ public class Cell : MonoBehaviour
         
     }
 
+    float Electron_Damage(float dist, float power)
+    {
+        return GaussBellDistribution(dist*(float)0.6, 1/10, power/200)/5;
+    }
+
+
     float GetDistance(Vector3 head)
     {
         return Mathf.Sqrt(Mathf.Pow(Mathf.Abs(gameObject.transform.position.x - head.x), 2) + Mathf.Pow(Mathf.Abs(gameObject.transform.position.y - head.y), 2));
@@ -62,8 +68,9 @@ public class Cell : MonoBehaviour
             float distance = GetDistance(coll.gameObject.transform.parent.transform.position) * (float)0.5;
             System.Console.WriteLine(distance);
             float intensity = coll.gameObject.transform.parent.GetComponent<Radiation>().Intensity;
-            this.HP -= Mathf.Abs(GaussBellDistribution(distance, 1 / 3, intensity)) / 4;
-            Debug.Log(Mathf.Abs(GaussBellDistribution(distance, 1, intensity)));
+            this.HP -= Electron_Damage(distance, intensity);
+            //this.HP -= Mathf.Abs(GaussBellDistribution(distance, 1 / 3, intensity)) / 4;
+            //Debug.Log(Mathf.Abs(GaussBellDistribution(distance, 1, intensity)));
             if (this.HP < 0)
             {
                 Destroy(gameObject);
