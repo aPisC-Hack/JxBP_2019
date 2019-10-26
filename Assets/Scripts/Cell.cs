@@ -13,6 +13,7 @@ public enum CellTypes
 
 public class Cell : MonoBehaviour
 {
+    public float RadiationImmunity = 1;
     private CellTypes cellType = CellTypes.Empty;
     public CellTypes CellType { 
         get {return cellType;} 
@@ -23,15 +24,18 @@ public class Cell : MonoBehaviour
                 {
                     case CellTypes.Good:
                         GetComponent<SpriteRenderer>().sprite = goodSprites[Random.Range(0, goodSprites.Length)];
+                        RadiationImmunity = 10;
                         break;
                     case CellTypes.Cancer:
                         GetComponent<SpriteRenderer>().sprite = badSprites[Random.Range(0, badSprites.Length)];
+                        RadiationImmunity = 7;
                         break;
                     case CellTypes.Dead:
                         GetComponent<SpriteRenderer>().sprite = deadSprites[Random.Range(0, deadSprites.Length)];
                         break;
                     case CellTypes.Important:
                         GetComponent<SpriteRenderer>().sprite = SensibleSprites[Random.Range(0, SensibleSprites.Length)];
+                        RadiationImmunity = 3;
                         break;
                 }
             }
@@ -42,6 +46,7 @@ public class Cell : MonoBehaviour
     Collider2D coll = null;
     private bool needupdate = false;
     public float hP = 1000;
+    public float maxHp = 1000;
 
     public float HP { get => hP; set => hP = value; }
 
@@ -91,17 +96,19 @@ public class Cell : MonoBehaviour
         if (needupdate)
         {
             float distance = GetDistance(coll.gameObject.transform.parent.transform.position) * (float)0.5;
-            System.Console.WriteLine(distance);
             float intensity = coll.gameObject.transform.parent.GetComponent<Radiation>().Intensity;
-            this.HP -= Mathf.Abs(GaussBellDistribution(distance, 1 / 3, intensity)) / 4;
-            Debug.Log(Mathf.Abs(GaussBellDistribution(distance, 1, intensity)));
-            if (this.HP < 0)
+            if(this.HP > 0){
+                this.HP -= Mathf.Abs(GaussBellDistribution(distance, 1 / 3, intensity)) / 4 / RadiationImmunity;
+            }
+            if (this.HP <= 0)
             {
-                Destroy(gameObject);
+                CellType = CellTypes.Dead;
 
             }
-
-
         }
+        Color c = GetComponent<SpriteRenderer>().color;
+        c.a = hP > 0 ? (hP * 1f / maxHp / 2) +0.5f : 1;
+        GetComponent<SpriteRenderer>().color = c;
+
     }
 }
