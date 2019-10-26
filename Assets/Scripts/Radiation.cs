@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Radiation : MonoBehaviour
 {
-    public float Intensity = 1, Depth = 1;
+    public float Intensity {get {return transform.parent.GetComponent<LaserHeadMovement>().Intensity;}}
     // Start is called before the first frame update
     void Start()
     {
