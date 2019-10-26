@@ -2,10 +2,20 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum CellTypes
+{
+    important,
+    good,
+    cancer
+}
 
 public class Cell : MonoBehaviour
 {
-    private float hP = 1;
+
+    Collider2D coll = null;
+    private bool needupdate = false;
+    public float hP = 1000;
+
     public float HP { get => hP; set => hP = value; }
 
     
@@ -15,7 +25,8 @@ public class Cell : MonoBehaviour
     //Gauss Bell Distribution
     float GaussBellDistribution(float x, float ex, float d2x)
     {
-        return Mathf.Exp(-Mathf.Pow((x - ex), 2) / 2 * Mathf.Sqrt(d2x)) / (Mathf.Sqrt(Mathf.PI*Mathf.Sqrt(d2x)));
+        d2x = 1 / d2x;
+        return 500*Mathf.Exp(-Mathf.Pow((x - ex), 2) / 2 * Mathf.Sqrt(d2x)) / (Mathf.Sqrt(Mathf.PI*Mathf.Sqrt(d2x)));
         
     }
 
@@ -25,23 +36,17 @@ public class Cell : MonoBehaviour
 
     }
 
-    private void OnTriggerStay2D(Collider2D collision)
-    {    
-        float distance = GetDistance(collision.gameObject.transform.parent.transform.position);
-        System.Console.WriteLine(distance);
-        float intensity = collision.gameObject.transform.parent.GetComponent<Radiation>().Intensity;
-        this.HP -= Mathf.Abs(GaussBellDistribution(distance, 1, intensity));
-        Debug.Log(Mathf.Abs(GaussBellDistribution(distance, 1, intensity)));
-        //Debug.Log(distance);
-        //Debug.Log(intensity);
-        //Debug.Log(gameObject.transform.position);
-        //Debug.Log(this.HP);
-        if (this.HP < 0)
-        {
-            Destroy(gameObject);
-            
-        }
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        coll = collision;
+        needupdate = true;        
         
+    }
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        coll = null;
+        needupdate = false;
+
     }
     // Start is called before the first frame update
     void Start()
@@ -52,6 +57,20 @@ public class Cell : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (needupdate)
+        {
+            float distance = GetDistance(coll.gameObject.transform.parent.transform.position) * (float)0.5;
+            System.Console.WriteLine(distance);
+            float intensity = coll.gameObject.transform.parent.GetComponent<Radiation>().Intensity;
+            this.HP -= Mathf.Abs(GaussBellDistribution(distance, 1 / 3, intensity)) / 4;
+            Debug.Log(Mathf.Abs(GaussBellDistribution(distance, 1, intensity)));
+            if (this.HP < 0)
+            {
+                Destroy(gameObject);
+
+            }
+
+
+        }
     }
 }
