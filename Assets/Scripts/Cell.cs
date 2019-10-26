@@ -18,7 +18,7 @@ public class Cell : MonoBehaviour
 
     public float HP { get => hP; set => hP = value; }
 
-    
+    public Sprite[] sprites;
     
 
 
