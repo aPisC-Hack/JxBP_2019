@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 6519678204284893852}
   - component: {fileID: 7616588045578242685}
   - component: {fileID: 3872343334281185630}
-  - component: {fileID: 5603009460436080757}
+  - component: {fileID: 2322558853308153016}
   m_Layer: 0
   m_Name: Cell
   m_TagString: Untagged
@@ -116,7 +116,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0865b4f8a4338604587e222b27c3e745, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  RadiationImmunity: 1
   hP: 1000
+  maxHp: 1000
   deadSprites:
   - {fileID: 21300000, guid: 2aacbaaafa4758f6487a6649d9e8d225, type: 3}
   - {fileID: 21300000, guid: 0a0a726a7c89342ec8b5ab3404c6ddd7, type: 3}
@@ -156,6 +158,11 @@ PolygonCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 1.0608696, y: 0.96086955}
-  m_EdgeRadius: 0
+  m_Points:
+    m_Paths:
+    - - {x: 0.27970588, y: -0.45713097}
+      - {x: 0.5284453, y: -0.0020541325}
+      - {x: 0.28509808, y: 0.45667234}
+      - {x: -0.2733454, y: 0.46830377}
+      - {x: -0.5419634, y: -0.0023476258}
+      - {x: -0.25783014, y: -0.46776158}

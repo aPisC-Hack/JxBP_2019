@@ -136,7 +136,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3833431992787087348}
   m_LocalRotation: {x: 0, y: 0, z: 0.013089582, w: 0.99991435}
-  m_LocalPosition: {x: 0, y: 0.67, z: -0.01}
+  m_LocalPosition: {x: 0, y: 0.67, z: -0.1}
   m_LocalScale: {x: 0.3, y: 0.3, z: 1}
   m_Children:
   - {fileID: 3833431992564914543}
@@ -160,6 +160,7 @@ MonoBehaviour:
   Radioation: {fileID: 6027302013136906175, guid: 54a9bd3e1d1249069815158150f5c2de,
     type: 3}
   RadiationPivot: {fileID: 3833431993166360230}
+  leftButtonPressed: 0
 --- !u!1 &3833431992847828783
 GameObject:
   m_ObjectHideFlags: 0
