@@ -47,7 +47,7 @@ public class Cell : MonoBehaviour
     private bool needupdate = false;
     public float hP = 1000;
     public float maxHp = 1000;
-
+    private float sqrt2 = Mathf.Sqrt(2);
     public float HP { get => hP; set => hP = value; }
 
     public Sprite[] deadSprites;
@@ -61,16 +61,23 @@ public class Cell : MonoBehaviour
     //Gauss Bell Distribution
     float GaussBellDistribution(float x, float ex, float d2x)
     {
-        d2x = 1 / d2x;
-        return 500*Mathf.Exp(-Mathf.Pow((x - ex), 2) / 2 * Mathf.Sqrt(d2x)) / (Mathf.Sqrt(Mathf.PI*Mathf.Sqrt(d2x)));
+        d2x = 1/d2x;
+        return 2500*Mathf.Exp(-Mathf.Pow((x - ex), 2) / 2 * d2x) / (Mathf.Sqrt(Mathf.PI*Mathf.Sqrt(d2x)));
         
     }
 
     float Electron_Damage(float dist, float power)
     {
-        return GaussBellDistribution(dist*(float)0.6, 1/10, power/200)/5;
+        return GaussBellDistribution(dist*(float)0.5, 1/3, power/2000);
     }
-
+    float Positron_Damage(float dist, float power, float maxdist)
+    {
+        if (dist>maxdist)
+        {
+            return 0;
+        }
+        return (dist)*power;
+    }
 
     float GetDistance(Vector3 head)
     {
@@ -104,14 +111,27 @@ public class Cell : MonoBehaviour
     {
         if (needupdate)
         {
+            float rotation = coll.gameObject.transform.parent.parent.GetComponent<LaserHeadMovement>().Rotation;
+
+            //proton távolság
+            //float newdistance = GetDistance(new Vector3(Mathf.Sin(rotation), Mathf.Cos(rotation))) * (float)0.5;
+
+            float newdistance = GetDistance(new Vector3(Mathf.Sin(rotation) * sqrt2 * 10, Mathf.Cos(rotation) * sqrt2 * 10)) * (float)0.5;
+            
+
             float distance = GetDistance(coll.gameObject.transform.parent.transform.position) * (float)0.5;
+
+
+            //Debug.Log("New: "+newdistance);
+            //Debug.Log("Old: " + distance);
             float intensity = coll.gameObject.transform.parent.GetComponent<Radiation>().Intensity;
             if(intensity == 0){
                 needupdate = false;
                 coll = null;
             }
             if(this.HP > 0){
-                this.HP -= Mathf.Abs(GaussBellDistribution(distance, 1 / 3, intensity)) / 4 / RadiationImmunity;
+                this.HP -= Positron_Damage(distance, intensity, 4);
+               // this.HP -= Mathf.Abs(GaussBellDistribution(distance, 1 / 3, intensity)) / 4 / RadiationImmunity;
             }
             if (this.HP <= 0)
             {
