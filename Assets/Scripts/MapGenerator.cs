@@ -21,6 +21,7 @@ public class MapGenerator : MonoBehaviour
              //  Debug.Log(pos);
                 GameObject c = GameObject.Instantiate(cell, transform);
                 c.transform.localPosition = pos;
+                c.GetComponent<Cell>().CellType = (CellTypes) (j % 3) + 1;
                 
             }
         }
