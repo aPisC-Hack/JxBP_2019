@@ -74,14 +74,18 @@ public class Cell : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        coll = collision;
-        needupdate = true;        
+        if(collision.tag == "Ray"){
+            coll = collision;
+            needupdate = true;        
+        }
         
     }
     private void OnTriggerExit2D(Collider2D collision)
     {
-        coll = null;
-        needupdate = false;
+        if(collision.tag == "Ray"){
+            coll = null;
+            needupdate = false;
+        }
 
     }
     // Start is called before the first frame update
@@ -97,6 +101,10 @@ public class Cell : MonoBehaviour
         {
             float distance = GetDistance(coll.gameObject.transform.parent.transform.position) * (float)0.5;
             float intensity = coll.gameObject.transform.parent.GetComponent<Radiation>().Intensity;
+            if(intensity == 0){
+                needupdate = false;
+                coll = null;
+            }
             if(this.HP > 0){
                 this.HP -= Mathf.Abs(GaussBellDistribution(distance, 1 / 3, intensity)) / 4 / RadiationImmunity;
             }
