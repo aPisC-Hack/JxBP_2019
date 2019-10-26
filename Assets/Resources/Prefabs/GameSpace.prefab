@@ -28,7 +28,7 @@ Transform:
   m_LocalPosition: {x: 0.08, y: -0.5, z: 0.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 6124694508074639280}
+  m_Father: {fileID: 3412043937475817553}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &6124694506182672670
@@ -54,7 +54,7 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 6124694508074639280}
+  - component: {fileID: 3412043937475817553}
   - component: {fileID: 6124694508074639287}
   m_Layer: 0
   m_Name: GameSpace
@@ -63,7 +63,7 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &6124694508074639280
+--- !u!4 &3412043937475817553
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -101,7 +101,7 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    m_TransformParent: {fileID: 6124694508074639280}
+    m_TransformParent: {fileID: 3412043937475817553}
     m_Modifications:
     - target: {fileID: 3391515789866756554, guid: 31a7e061a02bc26ae965eebe89973d2a,
         type: 3}

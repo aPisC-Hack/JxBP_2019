@@ -19,9 +19,10 @@ public class GameArea : MonoBehaviour
         float aH = Screen.height - TopPad - BottomPad, aW = Screen.width - LeftPad - RightPad;
         float x = Scale / Screen.height * 2;
 
-        Debug.Log(aH + " " +  aW + " " + x);
-        transform.localScale = new Vector3(aW*x, aH*x, 1);
-        transform.position = new Vector3((LeftPad - RightPad) * x , (BottomPad-TopPad) * x , 0);
+
+        float scale = Mathf.Min(aW*x, aH*x);
+        transform.localScale = new Vector3(scale, scale, 1);
+        transform.position = new Vector3((LeftPad - RightPad) , (BottomPad-TopPad) , 0);
         
     }
 }
