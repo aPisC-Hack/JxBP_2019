@@ -116,7 +116,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0865b4f8a4338604587e222b27c3e745, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-<<<<<<< HEAD
   RadiationImmunity: 1
   hP: 1000
   maxHp: 1000
@@ -138,11 +137,6 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 9cd1791c22598d00ca3104338d12c7c2, type: 3}
 --- !u!60 &-7635742731113038073
 PolygonCollider2D:
-=======
-  hP: 1000
---- !u!61 &5603009460436080757
-BoxCollider2D:
->>>>>>> ffdf9287f09ece73b38f103de412eca0c7173eb3
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
