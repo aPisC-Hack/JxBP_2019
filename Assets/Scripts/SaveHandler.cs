@@ -9,28 +9,28 @@ public static class SaveHandler
     private static readonly int saveCount = 4;
     private static Save[] saves = null;
 
-    public static void LoadSaves(){
-        if(saves != null) return;
+    public static void LoadSaves() {
+        if (saves != null) return;
         saves = new Save[saveCount];
-        for(int i = 0; i < saveCount; i++){
+        for (int i = 0; i < saveCount; i++) {
             LoadGame(i);
         }
     }
 
     private static void LoadGame(int index)
     {
-        if (File.Exists(Application.persistentDataPath + "/gamesave-"+index+".save"))
+        if (File.Exists(Application.persistentDataPath + "/gamesave-" + index + ".save"))
         {
             BinaryFormatter bf = new BinaryFormatter();
-            FileStream file = File.Open(Application.persistentDataPath + "/gamesave-"+index+".save", FileMode.Open);
+            FileStream file = File.Open(Application.persistentDataPath + "/gamesave-" + index + ".save", FileMode.Open);
             Save save = (Save)bf.Deserialize(file);
             saves[index] = save;
             file.Close();
         }
     }
 
-    public static Save GetSave(int index){
-        if(index < 0 || index >= saveCount) return null;
+    public static Save GetSave(int index) {
+        if (index < 0 || index >= saveCount) return null;
         return saves[index];
     }
 
@@ -40,10 +40,10 @@ public static class SaveHandler
         SaveGame(index, save);
     }
 
-    private static void SaveGame(int index, Save save){
+    private static void SaveGame(int index, Save save) {
 
         BinaryFormatter bf = new BinaryFormatter();
-        FileStream file = File.Create(Application.persistentDataPath + "/gamesave-"+index+".save");
+        FileStream file = File.Create(Application.persistentDataPath + "/gamesave-" + index + ".save");
         bf.Serialize(file, save);
         file.Close();
         saves[index] = save;
@@ -55,12 +55,12 @@ public static class SaveHandler
         Save save = new Save();
         foreach (var item in cells)
         {
-            
+
             save.hps.Add(item.gameObject.GetComponent<Cell>().HP);
             save.ids.Add(item.gameObject.GetComponent<Cell>().id);
             save.cts.Add(item.gameObject.GetComponent<Cell>().CellType);
 
-            
+
         }
         save.height = height;
         save.width = width;
@@ -71,17 +71,16 @@ public static class SaveHandler
         return save;
     }
 
-    public static void CreateNewSave(int index, int width, int height){
-        Save save = new Save();
-
+    public static void CreateNewSave(int index, int width, int height) {
+        Save save = new Save();;
         float sin60 = Mathf.Sin(60 * Mathf.Deg2Rad);
-
-        float gw = (width +1.5f) * 2 * sin60;
-        float gh = (height+1 )* 0.5f;
+        int mapNumber = Random.Range(0, maps.Count);
+        float gw = (width + 1.5f) * 2 * sin60;
+        float gh = (height + 1) * 0.5f;
         float radius = Mathf.Min(gw, gh) / 2;
-
-        width = map1[0].Length;
-        height = map1.Length;
+        int[][] map = maps[mapNumber];
+        width = map[0].Length;
+        height = map.Length;
 
         save.height = height;
         save.width = width;
@@ -89,64 +88,194 @@ public static class SaveHandler
         save.DayCount = 0;
         save.SessionId = index;
         //Debug.Log(sin60);
-        for(int i = 0; i < height; i++){
-            for(int j = 0; j < width; j++){
+        for (int i = 0; i < height; i++) {
+            for (int j = 0; j < width; j++) {
                 Vector3 pos = Vector3.zero;
-                pos.x += (j-width/2f)*2*sin60;
-                if(i%2== 1) pos.x += sin60;
-                pos.y = (i-height/2f) * .5f+0.4f;
+                pos.x += (j - width / 2f) * 2 * sin60;
+                if (i % 2 == 1) pos.x += sin60;
+                pos.y = (i - height / 2f) * .5f + 0.4f;
 
-                if(pos.magnitude <= radius){
+                if (pos.magnitude <= radius) {
 
                     save.hps.Add(1000);
                     save.ids.Add(i * height + j);
-                    save.cts.Add((CellTypes) map1[i][j]);
+                    save.cts.Add((CellTypes)map[i][j]);
                 }
 
-                
+
             }
         }
         //saves[index] = save;
-        SaveGame(index, save); 
+        SaveGame(index, save);
     }
 
-    public static void CreateNewSave(int index){
+    public static void CreateNewSave(int index) {
         CreateNewSave(index, 14, 32);
     }
 
-    public static void DestroySave(int index){
-        if (File.Exists(Application.persistentDataPath + "/gamesave-"+index+".save"))
+    public static void DestroySave(int index) {
+        if (File.Exists(Application.persistentDataPath + "/gamesave-" + index + ".save"))
         {
-            File.Delete(Application.persistentDataPath + "/gamesave-"+index+".save");
+            File.Delete(Application.persistentDataPath + "/gamesave-" + index + ".save");
         }
     }
-
-    static int[][] map1 = new int[][] {
-        new int[]{2,2,2,2,3,3,2,2,2,2,3,3,3,3},
-        new int[]{2,2,2,2,2,3,2,2,3,3,3,2,2,2},
-        new int[]{3,3,2,2,2,2,1,2,2,2,3,2,2,2},
-        new int[]{1,3,3,2,2,2,2,2,2,3,3,3,2,3},
-        new int[]{2,3,3,3,2,2,2,2,2,3,2,2,2,2},
-        new int[]{2,2,2,2,2,3,3,3,2,2,3,2,3,2},
-        new int[]{2,3,2,2,3,3,3,1,2,2,2,2,3,2},
-        new int[]{1,2,2,2,3,2,2,2,2,2,3,3,2,2},
-        new int[]{2,2,3,2,2,2,2,3,3,2,2,2,2,2},
-        new int[]{3,3,3,1,2,2,2,2,3,3,2,2,2,2},
-        new int[]{2,2,2,2,2,2,2,2,2,2,2,3,3,3},
-        new int[]{2,3,3,2,2,2,2,2,3,3,1,2,2,2},
-        new int[]{2,2,1,2,2,2,2,2,2,3,2,2,2,2},
-        new int[]{2,2,2,3,3,2,2,2,2,1,2,2,2,2},
-        new int[]{3,3,3,2,2,2,2,2,2,3,2,2,2,2},
-        new int[]{2,2,2,2,3,2,2,2,2,3,2,2,2,2},
-        new int[]{2,2,3,3,3,2,2,2,2,2,2,2,2,3},
-        new int[]{2,2,2,2,2,2,2,2,1,2,2,2,2,2},
-        new int[]{2,2,2,2,3,3,2,2,2,2,3,3,3,3},
-        new int[]{2,2,2,2,2,3,2,2,3,3,3,2,2,2},
-        new int[]{3,3,2,2,2,2,1,2,2,2,3,2,2,2},
-        new int[]{2,3,2,2,3,3,3,1,2,2,2,2,3,2},
-        new int[]{2,2,2,2,3,3,2,2,2,2,2,2,3,3},
-        new int[]{2,2,3,3,3,3,2,2,2,2,2,2,2,3},
-        new int[]{2,3,3,3,2,2,2,2,2,1,2,2,2,2}
+    public static List<int[][]> maps = new List<int[][]>() {
+        new int[][] {
+            new int[]{2,2,2,2,3,3,2,2,2,2,3,3,3,3},
+            new int[]{2,2,2,2,2,3,2,2,3,3,3,2,2,2},
+            new int[]{3,3,2,2,2,2,1,2,2,2,3,2,2,2},
+            new int[]{1,3,3,2,2,2,2,2,2,3,3,3,2,3},
+            new int[]{2,3,3,3,2,2,2,2,2,3,2,2,2,2},
+            new int[]{2,2,2,2,2,3,3,3,2,2,3,2,3,2},
+            new int[]{2,3,2,2,3,3,3,1,2,2,2,2,3,2},
+            new int[]{1,2,2,2,3,2,2,2,2,2,3,3,2,2},
+            new int[]{2,2,3,2,2,2,2,3,3,2,2,2,2,2},
+            new int[]{3,3,3,1,2,2,2,2,3,3,2,2,2,2},
+            new int[]{2,2,2,2,2,2,2,2,2,2,2,3,3,3},
+            new int[]{2,3,3,2,2,2,2,2,3,3,1,2,2,2},
+            new int[]{2,2,1,2,2,2,2,2,2,3,2,2,2,2},
+            new int[]{2,2,2,3,3,2,2,2,2,1,2,2,2,2},
+            new int[]{3,3,3,2,2,2,2,2,2,3,2,2,2,2},
+            new int[]{2,2,2,2,3,2,2,2,2,3,2,2,2,2},
+            new int[]{2,2,3,3,3,2,2,2,2,2,2,2,2,3},
+            new int[]{2,2,2,2,2,2,2,2,1,2,2,2,2,2},
+            new int[]{2,2,2,2,3,3,2,2,2,2,3,3,3,3},
+            new int[]{2,2,2,2,2,3,2,2,3,3,3,2,2,2},
+            new int[]{3,3,2,2,2,2,1,2,2,2,3,2,2,2},
+            new int[]{2,3,2,2,3,3,3,1,2,2,2,2,3,2},
+            new int[]{2,2,2,2,3,3,2,2,2,2,2,2,3,3},
+            new int[]{2,2,3,3,3,3,2,2,2,2,2,2,2,3},
+            new int[]{2,3,3,3,2,2,2,2,2,1,2,2,2,2}
+        },
+        new int[][]
+        {
+            new int[]{3,3,3,3,3,3,3,2,2,2,1,2,2,2 },
+            new int[]{3,3,3,3,2,2,2,2,2,2,2,2,2,2},
+            new int[]{3,3,3,2,2,2,2,2,3,3,3,2,2,2},
+            new int[]{3,3,3,2,2,2,2,2,2,2,3,2,2,2},
+            new int[]{2,2,3,3,2,1,2,2,2,2,3,3,2,2},
+            new int[]{2,2,2,3,3,3,3,3,3,3,3,3,2,2},
+            new int[]{2,2,2,3,3,2,2,2,2,3,3,3,2,2},
+            new int[]{2,2,2,3,2,2,2,2,2,2,3,3,3,3},
+            new int[]{2,2,3,3,3,3,2,2,2,2,2,2,3,2},
+            new int[]{2,2,2,2,2,3,3,2,2,2,2,3,3,3},
+            new int[]{2,2,3,3,3,3,2,2,2,2,2,2,3,3},
+            new int[]{2,2,2,2,2,3,3,3,3,3,2,1,2,2},
+            new int[]{2,2,2,3,3,3,3,3,2,2,2,2,3,3},
+            new int[]{2,2,3,3,3,3,2,2,2,2,2,2,2,2},
+            new int[]{3,3,2,2,1,2,2,2,2,2,3,3,3,2},
+            new int[]{3,3,3,3,2,2,2,2,2,2,2,2,2,2},
+            new int[]{3,3,3,2,2,2,2,1,2,3,3,2,2,2},
+            new int[]{3,2,2,2,2,2,2,3,3,2,2,2,2,2},
+            new int[]{3,3,3,3,2,2,2,2,2,2,2,2,3,2},
+            new int[]{2,3,3,1,2,2,2,2,2,2,2,3,2,2},
+            new int[]{2,2,2,2,3,2,2,2,2,2,3,2,2,2},
+            new int[]{2,3,3,3,3,3,2,2,2,2,2,2,2,3},
+            new int[]{2,2,2,2,2,3,3,3,3,3,2,2,2,2},
+            new int[]{2,2,1,2,2,3,3,3,3,3,3,1,2,2},
+            new int[]{2,2,2,3,2,2,3,3,2,2,2,2,3,3},
+            new int[]{2,3,3,2,2,2,2,2,3,2,2,2,3,3},
+            new int[]{3,3,2,2,1,2,2,2,2,2,3,3,3,2},
+            new int[]{2,2,3,3,3,3,2,2,2,2,2,2,3,2}
+        },
+        new int[][]
+        {
+            new int[]{3,3,3,2,2,2,1,3,3,3,2,2,2,2},
+            new int[]{3,3,2,2,3,3,3,3,3,3,2,2,3,3},
+            new int[]{3,3,3,3,2,3,3,3,1,2,3,3,2,2},
+            new int[]{3,3,3,2,2,3,2,2,3,3,2,2,2,2},
+            new int[]{2,2,3,3,2,2,2,2,2,2,3,3,3,3},
+            new int[]{2,3,3,3,2,2,3,3,3,3,3,2,2,1},
+            new int[]{2,2,1,3,3,3,3,3,3,2,2,2,2,3},
+            new int[]{3,3,3,3,3,2,2,2,2,3,3,3,2,3},
+            new int[]{2,2,3,3,3,3,3,2,2,3,3,3,2,2},
+            new int[]{3,3,3,3,3,3,3,2,2,3,3,3,3,3},
+            new int[]{2,2,3,3,3,3,3,2,2,2,2,3,3,3},
+            new int[]{2,2,3,3,3,2,2,2,2,3,3,3,3,3},
+            new int[]{2,2,2,3,3,3,3,3,2,2,2,1,3,3},
+            new int[]{2,2,3,3,3,3,2,2,2,2,2,3,3,3},
+            new int[]{2,2,2,3,3,3,3,2,2,2,3,3,3,3},
+            new int[]{2,2,3,3,3,2,2,3,2,3,3,2,2,2},
+            new int[]{3,3,3,2,2,3,3,3,3,2,2,2,2,2},
+            new int[]{3,3,2,1,3,3,2,3,3,3,3,2,2,2},
+            new int[]{3,3,3,3,2,2,2,3,3,3,3,3,2,2},
+            new int[]{3,3,2,2,2,2,2,3,3,3,3,3,2,2},
+            new int[]{3,2,2,2,2,3,3,3,2,3,2,3,2,2},
+            new int[]{3,3,2,3,2,3,3,1,3,3,2,2,2,3},
+            new int[]{3,3,2,2,2,3,3,2,2,2,2,2,3,3},
+            new int[]{3,2,2,2,3,3,3,2,2,2,3,3,2,2},
+            new int[]{3,3,2,2,3,3,3,3,3,2,2,2,3,3},
+            new int[]{3,3,2,2,2,2,2,3,3,3,2,2,2,3},
+            new int[]{3,3,2,2,2,3,3,3,3,3,2,2,2,3},
+            new int[]{2,2,2,3,1,3,2,2,2,2,3,3,3,2}
+        },
+        new int[][]
+        {
+            new int[]{3,3,3,3,3,3,3,3,3,3,3,3,3,3},
+            new int[]{3,3,3,3,3,3,1,3,3,3,3,3,3,3},
+            new int[]{3,3,3,3,2,2,3,3,3,3,3,3,3,3},
+            new int[]{3,3,3,3,3,3,2,2,2,3,3,3,3,3},
+            new int[]{3,2,2,2,3,3,3,3,3,3,3,3,3,3},
+            new int[]{3,3,3,3,3,3,3,3,3,3,2,2,3,3},
+            new int[]{3,2,2,2,3,3,3,3,3,3,3,3,3,3},
+            new int[]{3,3,3,3,2,2,1,3,3,3,3,2,2,3},
+            new int[]{3,3,3,3,3,3,2,2,2,2,2,3,3,3},
+            new int[]{3,3,3,3,3,2,3,3,3,3,3,2,3,3},
+            new int[]{3,3,3,3,2,2,3,3,3,3,3,2,2,3},
+            new int[]{3,3,3,3,3,3,3,3,3,3,3,3,3,3},
+            new int[]{3,3,2,2,2,3,3,3,3,3,3,2,3,3},
+            new int[]{3,3,3,3,3,3,3,3,3,3,3,3,3,3},
+            new int[]{3,3,2,2,3,3,3,3,2,2,3,3,3,1},
+            new int[]{3,3,3,3,3,3,3,3,3,3,3,3,3,2},
+            new int[]{3,3,2,3,3,3,3,3,3,3,3,3,3,3},
+            new int[]{2,2,2,3,3,3,3,2,2,3,3,3,3,3},
+            new int[]{3,3,2,2,2,3,3,3,3,3,3,3,3,2},
+            new int[]{3,3,1,3,3,3,3,3,2,2,3,3,3,3},
+            new int[]{2,2,2,3,3,3,3,3,3,3,3,3,2,2},
+            new int[]{3,3,3,3,2,2,2,2,2,2,3,3,3,3},
+            new int[]{3,3,3,3,3,3,3,3,3,3,3,3,3,3},
+            new int[]{3,2,2,3,3,3,3,3,3,3,3,2,1,3},
+            new int[]{3,3,3,2,2,3,3,3,3,3,2,2,2,3},
+            new int[]{3,3,3,2,3,3,3,3,3,3,3,3,3,3},
+            new int[]{3,3,3,3,3,3,3,3,2,2,2,3,3,3},
+            new int[]{2,1,3,3,3,3,3,3,3,2,3,3,3,3}
+        },
+        new int[][]
+        {
+            new int[]{3,3,3,3,3,3,3,3,3,3,3,3,3,3},
+            new int[]{3,3,3,2,3,3,3,3,3,3,3,3,2,2},
+            new int[]{3,3,3,3,2,2,1,3,3,3,3,1,3,3},
+            new int[]{3,3,3,3,2,2,3,3,3,3,3,3,3,3},
+            new int[]{3,3,3,3,2,2,1,3,3,3,3,3,2,2},
+            new int[]{3,2,2,2,3,3,3,3,2,3,3,3,3,3},
+            new int[]{3,3,3,3,3,2,2,3,3,3,3,3,3,3},
+            new int[]{3,3,3,3,3,3,3,3,3,3,2,2,3,3},
+            new int[]{3,2,2,2,3,3,3,3,2,2,3,3,2,2},
+            new int[]{2,1,3,3,3,3,3,3,3,2,3,3,3,3},
+            new int[]{3,3,3,3,3,3,3,3,3,3,3,3,3,3},
+            new int[]{3,3,3,3,2,2,1,3,3,3,3,2,2,3},
+            new int[]{3,3,3,3,3,3,2,2,2,2,2,3,3,3},
+            new int[]{3,3,3,3,3,2,3,3,3,3,3,2,3,3},
+            new int[]{3,3,3,3,2,3,3,3,2,2,3,3,3,3},
+            new int[]{3,3,3,3,3,3,3,2,2,3,3,3,3,3},
+            new int[]{3,3,2,2,2,3,3,3,3,3,3,2,3,2},
+            new int[]{3,3,3,3,3,3,3,3,3,3,3,3,3,3},
+            new int[]{3,3,2,2,3,3,2,3,3,3,2,2,2,2},
+            new int[]{3,3,3,3,3,3,3,3,2,2,3,3,3,3},
+            new int[]{3,3,2,2,2,3,3,3,2,3,3,3,3,3},
+            new int[]{3,3,1,3,3,3,3,3,3,3,2,1,3,3},
+            new int[]{3,3,2,3,3,3,3,3,3,3,3,3,3,3},
+            new int[]{2,2,2,3,3,3,3,2,2,3,3,3,3,3},
+            new int[]{3,3,2,2,2,3,3,3,3,3,3,3,3,2},
+            new int[]{3,3,1,3,3,3,3,3,2,2,3,3,2,2},
+            new int[]{2,2,2,3,3,3,3,2,2,3,3,3,3,3},
+            new int[]{3,3,3,3,2,2,2,2,2,2,3,3,3,3},
+            new int[]{3,3,3,3,3,3,3,2,2,3,3,3,3,3},
+            new int[]{3,2,2,3,3,3,3,3,3,3,3,2,1,3},
+            new int[]{3,3,3,2,2,3,3,3,3,3,2,2,2,3},
+            new int[]{3,3,2,2,3,3,3,3,3,3,3,3,3,3},
+            new int[]{3,3,3,3,3,3,3,3,2,2,2,2,2,3}
+        }
     };
 
 }
