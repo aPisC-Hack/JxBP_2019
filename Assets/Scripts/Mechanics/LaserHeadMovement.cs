@@ -5,9 +5,10 @@ using UnityEngine;
 
 public class LaserHeadMovement : MonoBehaviour
 {
+    public enum RadiationTypes {Gamma, Electron, Proton}
     
     public float Rotation;
-
+    public RadiationTypes RadiationType { get; set; }
     public float[] Intensities = new float[]{0 , 2, 4, 6, 100};
 
     public GameObject Radioation;
