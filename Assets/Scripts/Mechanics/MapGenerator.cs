@@ -16,6 +16,8 @@ public class MapGenerator : MonoBehaviour
         Save save = SaveHandler.GetSave(saveid);
         if (save != null)
         {
+            width = save.width;
+            height = save.height;
             float sin60 = Mathf.Sin(60 * Mathf.Deg2Rad);
 
             float gw = (save.width + 1.5f) * 2 * sin60;
@@ -40,27 +42,31 @@ public class MapGenerator : MonoBehaviour
 
                     if (pos.magnitude <= radius)
                     {
+                        if(save.ids.IndexOf(i * height + j) != -1){
+                            //  Debug.Log(pos);
+                            GameObject c = GameObject.Instantiate(cell, transform);
+                            c.transform.localPosition = pos;
+                            int k = 0;
+                            for (k = 0; k < save.ids.Count && save.ids[k] != i*j+j; k++)
+                            {
 
-                        //  Debug.Log(pos);
-                        GameObject c = GameObject.Instantiate(cell, transform);
-                        c.transform.localPosition = pos;
-                        int k = 0;
-                        for (k = 0; k < save.ids.Count && save.ids[k] != i*j+j; k++)
-                        {
+                            }
+                            
+                            c.GetComponent<Cell>().id = save.ids[save.ids.IndexOf(i * height + j)];
+                        // Debug.Log("ID" + save.ids[save.ids.IndexOf(i * height + j)]);
+                            c.GetComponent<Cell>().CellType = save.cts[save.ids.IndexOf(i * height + j)];
+                            c.GetComponent<Cell>().HP = save.hps[save.ids.IndexOf(i * height + j)];
+                            cells.Add(c);
 
                         }
-                        
-                        c.GetComponent<Cell>().id = save.ids[save.ids.IndexOf(i * height + j)];
-                       // Debug.Log("ID" + save.ids[save.ids.IndexOf(i * height + j)]);
-                        c.GetComponent<Cell>().CellType = save.cts[save.ids.IndexOf(i * height + j)];
-                        c.GetComponent<Cell>().HP = save.hps[save.ids.IndexOf(i * height + j)];
-                        cells.Add(c);
                     }
 
 
                 }
             }
 
+            cells.ForEach(x=> x.GetComponent<Cell>().findNeighbours());
+            cells.ForEach(x=> x.GetComponent<Cell>().Spread());
 
             float size = radius * 2.8f;
             float diff = 2 / size;
@@ -80,4 +86,5 @@ public class MapGenerator : MonoBehaviour
     {
         
     }
+
 }

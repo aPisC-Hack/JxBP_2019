@@ -113,7 +113,7 @@ public class Cell : MonoBehaviour
         findNeighbours();
     }
 
-    private void findNeighbours()
+    public void findNeighbours()
     {
         int height = this.gameObject.transform.parent.GetComponent<MapGenerator>().height;
         int x = Mathf.FloorToInt(id / height);
@@ -184,7 +184,7 @@ public class Cell : MonoBehaviour
     /// <returns>Valószínűsség</returns>
     static double Oraculum_Func(float GoodHP, float CancerHp, float MaxHp)
     {
-        double balancer = 0.6;
+        double balancer = 2.9;
         return (balancer * CancerHp - GoodHP) / MaxHp;
 
     }
@@ -197,14 +197,11 @@ public class Cell : MonoBehaviour
     /// <returns>Terjed-e</returns>
     static bool Will_Spread(float GoodHP, float CancerHp, float MaxHp)
     {
-        System.Random r = new System.Random();
         //Debug.Log(Oraculum_Func(GoodHP, CancerHp, MaxHp));
         double val = Oraculum_Func(GoodHP, CancerHp, MaxHp);
-        double rand = r.NextDouble();
+        double rand = Random.Range(0, 1);
         return rand < val;
     }
-
-    int i = 0;
 
     public void Spread()
     {
@@ -239,12 +236,6 @@ public class Cell : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        i++;
-        if (i==150)
-        {
-            Spread();
-            i = 0;
-        }
         if (needupdate)
         {
             float rotation = coll.gameObject.transform.parent.parent.GetComponent<LaserHeadMovement>().Rotation;
@@ -266,7 +257,9 @@ public class Cell : MonoBehaviour
                 coll = null;
             }
             if(this.HP > 0){
-                this.HP -= Positron_Damage(distance, intensity, 4);
+                float dosis = Positron_Damage(distance, intensity, 4);
+                this.HP -= dosis;
+                transform.parent.GetComponent<DosisCalculator>().addDosis(dosis);
                // this.HP -= Mathf.Abs(GaussBellDistribution(distance, 1 / 3, intensity)) / 4 / RadiationImmunity;
             }
             if (this.HP <= 0)
