@@ -240,27 +240,27 @@ public class Cell : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (needupdate)
+        if (true)
         {
-            float rotation = coll.gameObject.transform.parent.parent.GetComponent<LaserHeadMovement>().Rotation;
-
-            //proton távolság
-            //float newdistance = GetDistance(new Vector3(Mathf.Sin(rotation), Mathf.Cos(rotation))) * (float)0.5;
-
-            float newdistance = GetDistance(new Vector3(Mathf.Sin(rotation) * sqrt2 * 10, Mathf.Cos(rotation) * sqrt2 * 10)) * (float)0.5;
-            
-
-            float distance = GetDistance(coll.gameObject.transform.parent.transform.position) * (float)0.5;
 
 
             //Debug.Log("New: "+newdistance);
             //Debug.Log("Old: " + distance);
-            float intensity = coll.gameObject.transform.parent.GetComponent<Radiation>().Intensity;
-            if(intensity == 0){
-                needupdate = false;
-                coll = null;
-            }
-            if(this.HP > 0){
+            if(this.HP > 0 && needupdate && coll != null){
+                float intensity = coll.gameObject.transform.parent.GetComponent<Radiation>().Intensity;
+                if(intensity == 0){
+                    needupdate = false;
+                    coll = null;
+                }
+                float rotation = coll.gameObject.transform.parent.parent.GetComponent<LaserHeadMovement>().Rotation;
+
+                //proton távolság
+                //float newdistance = GetDistance(new Vector3(Mathf.Sin(rotation), Mathf.Cos(rotation))) * (float)0.5;
+
+                float newdistance = GetDistance(new Vector3(Mathf.Sin(rotation) * sqrt2 * 10, Mathf.Cos(rotation) * sqrt2 * 10)) * (float)0.5;
+                
+
+                float distance = GetDistance(coll.gameObject.transform.parent.transform.position) * (float)0.5;
                 float dosis = Positron_Damage(distance, intensity, 4);
                 this.HP -= dosis;
                 transform.parent.GetComponent<DosisCalculator>().addDosis(dosis);
