@@ -6,6 +6,7 @@ public class MainMenu : MonoBehaviour
 {
     public Sprite[] exitSprites;
     public Sprite[] newGameSprites;
+    public Sprite[] characterSprites;
     // Start is called before the first frame update
     void Start()
     {
@@ -20,7 +21,10 @@ public class MainMenu : MonoBehaviour
 
     public void NewGame()
     {
-        DialogHandler.OpenDialogScene(newGameSprites, ()=> UnityEngine.SceneManagement.SceneManager.LoadScene("GameScene"), 0);
+        SliderHandler.OpenScene(characterSprites, (i)=>{
+            if(i != -1) DialogHandler.OpenDialogScene(newGameSprites, ()=> UnityEngine.SceneManagement.SceneManager.LoadScene("GameScene"), 0);
+            else UnityEngine.SceneManagement.SceneManager.LoadScene("Menu");
+        });
     }
     public void ExitGame(){
         DialogHandler.OpenDialogScene(exitSprites, ()=> Application.Quit(), 1000);

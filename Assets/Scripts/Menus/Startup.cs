@@ -7,8 +7,8 @@ public class Startup: MonoBehaviour
     public Sprite[] WelcomeSprites;
     void Start()
     {
-        //DialogHandler.OpenDialogScene(WelcomeSprites, ()=> UnityEngine.SceneManagement.SceneManager.LoadScene("Menu"), 1500);
-        SliderHandler.OpenScene(WelcomeSprites, (x)=> UnityEngine.SceneManagement.SceneManager.LoadScene("Menu"));
+        DialogHandler.OpenDialogScene(WelcomeSprites, ()=> UnityEngine.SceneManagement.SceneManager.LoadScene("Menu"), 1500);
+        //SliderHandler.OpenScene(WelcomeSprites, (x)=> UnityEngine.SceneManagement.SceneManager.LoadScene("Menu"));
     }
 
     // Update is called once per frame
