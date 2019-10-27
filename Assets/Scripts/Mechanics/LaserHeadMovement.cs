@@ -12,11 +12,12 @@ public class LaserHeadMovement : MonoBehaviour
 
     public GameObject Radioation;
     public GameObject RadiationPivot;
+    public int IntensityId { get; private set; }
     public float Intensity{
-        get{return Intensities[ intensityId];}
+        get{return Intensities[ IntensityId];}
     }
     private float sqrt2 = Mathf.Sqrt(2);
-    private int intensityId = 0;
+
 
     // Start is called before the first frame update
     void Start()
@@ -42,6 +43,6 @@ public class LaserHeadMovement : MonoBehaviour
     }
 
     public void SwitchIntensity(int i){
-        intensityId = Mathf.Clamp(intensityId + i, 0, Intensities.Length-1);
+        IntensityId = Mathf.Clamp(IntensityId + i, 0, Intensities.Length-1);
     }
 }
