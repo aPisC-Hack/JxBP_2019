@@ -308,27 +308,27 @@ public class Cell : MonoBehaviour
                 transform.parent.GetComponent<DosisCalculator>().addDosis(dosis);
                 // this.HP -= Mathf.Abs(GaussBellDistribution(distance, 1 / 3, intensity)) / 4 / RadiationImmunity;
             }
-            if (this.HP <= 0 && CellType != CellTypes.Dead)
+        }
+        if (this.HP <= 0 && CellType != CellTypes.Dead)
+        {
+            this.gameObject.transform.parent.GetComponent<MapGenerator>().sums[(int)CellType] -= 1;
+            CellType = CellTypes.Dead;
+            this.gameObject.transform.parent.GetComponent<MapGenerator>().sums[(int)CellType] += 1;
+            if (this.gameObject.transform.parent.GetComponent<MapGenerator>().sums[(int)CellTypes.Cancer] <= 0)
             {
-                this.gameObject.transform.parent.GetComponent<MapGenerator>().sums[(int)CellType] -= 1;
-                CellType = CellTypes.Dead;
-                this.gameObject.transform.parent.GetComponent<MapGenerator>().sums[(int)CellType] += 1;
-                if (this.gameObject.transform.parent.GetComponent<MapGenerator>().sums[(int)CellTypes.Cancer] <= 0)
-                {
-                    SaveHandler.DestroySave(MapGenerator.saveid);
-                    transform.parent.GetComponent<DosisCalculator>().GameWonDialog();
-                }
-                else if (this.gameObject.transform.parent.GetComponent<MapGenerator>().sums[(int)CellTypes.Good] <= 0)
-                {
-                    transform.parent.GetComponent<DosisCalculator>().GameLooseDialog();
-                }
-                else if (this.gameObject.transform.parent.GetComponent<MapGenerator>().sums[(int)CellTypes.Important] <= 0)
-                {
-                    transform.parent.GetComponent<DosisCalculator>().GameLooseDialog();
-                }
-
-
+                SaveHandler.DestroySave(MapGenerator.saveid);
+                transform.parent.GetComponent<DosisCalculator>().GameWonDialog();
             }
+            else if (this.gameObject.transform.parent.GetComponent<MapGenerator>().sums[(int)CellTypes.Good] <= 0)
+            {
+                transform.parent.GetComponent<DosisCalculator>().GameLooseDialog();
+            }
+            else if (this.gameObject.transform.parent.GetComponent<MapGenerator>().sums[(int)CellTypes.Important] <= 0)
+            {
+                transform.parent.GetComponent<DosisCalculator>().GameLooseDialog();
+            }
+
+
         }
         Color c = GetComponent<SpriteRenderer>().color;
         c.a = hP > 0 ? (hP * 1f / maxHp / 2) + 0.5f : 1;
