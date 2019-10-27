@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.Serialization.Formatters.Binary;
 using UnityEngine;
 using System.IO;
@@ -11,6 +12,28 @@ public class MapGenerator : MonoBehaviour
     public GameObject cell;
     public int width = 5, height = 5;
     public static int saveid=0;
+
+    public void Flash(){
+        var sel = cells.OrderByDescending((x)=> 
+            x.GetComponent<Cell>().neighbours.Sum(
+                y => {
+                    var cell = cells.FirstOrDefault(z => z.GetComponent<Cell>().id == y)?.GetComponent<Cell>();
+                    if(cell == null || cell.CellType != CellTypes.Cancer) return 0;
+                    return cell.HP;
+                }
+            )
+        ).First();
+
+        var nei = sel.GetComponent<Cell>().neighbours
+            .Select(x=>cells.FirstOrDefault(z => z.GetComponent<Cell>().id == x)?.GetComponent<Cell>()
+            ).Where(x => x!= null);
+
+        foreach(var n in nei){
+            n.HP = -1;
+        }
+        sel.GetComponent<Cell>().HP=-1;
+            
+    }
 
     public void LoadGame()
     {
