@@ -289,7 +289,7 @@ public class Cell : MonoBehaviour
                 needupdate = false;
                 coll = null;
             }
-            if (this.HP > 0)
+            if (this.HP > 0 && coll != null)
             {
                 float dosis = calculateDosis(distance, intensity, (int)coll.gameObject.transform.parent.parent.GetComponent<LaserHeadMovement>().RadiationType);
                 this.HP -= dosis;
