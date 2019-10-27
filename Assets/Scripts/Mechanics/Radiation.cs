@@ -5,6 +5,7 @@ using UnityEngine;
 public class Radiation : MonoBehaviour
 {
     public Color[] colors;
+    public Sprite[] sprites;
     public float Intensity {get {return transform.parent.GetComponent<LaserHeadMovement>().Intensity;}}
     // Start is called before the first frame update
     void Start()
@@ -22,5 +23,7 @@ public class Radiation : MonoBehaviour
         LaserHeadMovement.RadiationTypes rt = transform.parent.GetComponent<LaserHeadMovement>().RadiationType;
         
         transform.GetChild(0).GetComponent<SpriteRenderer>().color = colors[(int)rt];
+        transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = sprites[(int)rt];
+        
     }
 }
