@@ -46,8 +46,9 @@ public class Cell : MonoBehaviour
 
     Collider2D coll = null;
     private bool needupdate = false;
-    public float hP = 1000;
     public float maxHp = 1000;
+    public float hP = 1000;
+    
     private float sqrt2 = Mathf.Sqrt(2);
     public float HP { get => hP; set => hP = value; }
     
