@@ -284,7 +284,7 @@ public class Cell : MonoBehaviour
                 coll = null;
             }
             if(this.HP > 0){
-                float dosis = calculateDosis(distance, intensity, 1);
+                float dosis = calculateDosis(distance, intensity, (int)coll.gameObject.transform.parent.parent.GetComponent<LaserHeadMovement>().RadiationType);
                 this.HP -= dosis;
                 transform.parent.GetComponent<DosisCalculator>().addDosis(dosis);
                // this.HP -= Mathf.Abs(GaussBellDistribution(distance, 1 / 3, intensity)) / 4 / RadiationImmunity;
