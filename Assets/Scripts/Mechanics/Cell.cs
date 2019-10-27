@@ -268,7 +268,7 @@ public class Cell : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (needupdate)
+        if (needupdate && coll != null)
         {
             float rotation = coll.gameObject.transform.parent.parent.GetComponent<LaserHeadMovement>().Rotation;
 
@@ -289,9 +289,9 @@ public class Cell : MonoBehaviour
                 needupdate = false;
                 coll = null;
             }
-            if (this.HP > 0)
+            if (this.HP > 0 && coll != null)
             {
-                float dosis = calculateDosis(distance, intensity, (int)coll.gameObject.transform.parent.parent.GetComponent<LaserHeadMovement>().RadiationType);
+                float dosis = calculateDosis(distance, intensity, (int)coll.transform.parent.parent.GetComponent<LaserHeadMovement>().RadiationType);
                 this.HP -= dosis;
                 transform.parent.GetComponent<DosisCalculator>().addDosis(dosis);
                 // this.HP -= Mathf.Abs(GaussBellDistribution(distance, 1 / 3, intensity)) / 4 / RadiationImmunity;
