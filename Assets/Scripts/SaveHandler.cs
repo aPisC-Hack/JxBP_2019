@@ -114,6 +114,12 @@ public static class SaveHandler
         CreateNewSave(index, 14, 32);
     }
 
+    public static void DestroySave(int index){
+        if (File.Exists(Application.persistentDataPath + "/gamesave-"+index+".save"))
+        {
+            File.Delete(Application.persistentDataPath + "/gamesave-"+index+".save");
+        }
+    }
 
     static int[][] map1 = new int[][] {
         new int[]{2,2,2,2,3,3,2,2,2,2,3,3,3,3},

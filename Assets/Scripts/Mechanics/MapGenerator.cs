@@ -47,17 +47,13 @@ public class MapGenerator : MonoBehaviour
                             //  Debug.Log(pos);
                             GameObject c = GameObject.Instantiate(cell, transform);
                             c.transform.localPosition = pos;
-                            int k = 0;
-                            for (k = 0; k < save.ids.Count && save.ids[k] != i*j+j; k++)
-                            {
-
-                            }
                             
                             c.GetComponent<Cell>().id = save.ids[save.ids.IndexOf(i * height + j)];
-                        // Debug.Log("ID" + save.ids[save.ids.IndexOf(i * height + j)]);
+                            // Debug.Log("ID" + save.ids[save.ids.IndexOf(i * height + j)]);
                             c.GetComponent<Cell>().CellType = save.cts[save.ids.IndexOf(i * height + j)];
                             c.GetComponent<Cell>().HP = save.hps[save.ids.IndexOf(i * height + j)];
                             cells.Add(c);
+                            sums[(int)c.GetComponent<Cell>().CellType]++;
 
                         }
                     }

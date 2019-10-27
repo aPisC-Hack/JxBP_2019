@@ -5,6 +5,8 @@ using UnityEngine;
 public class DosisCalculator : MonoBehaviour
 {
     public Sprite[] TreatmentFinishedSprites;
+    public Sprite[] GameWonSprites;
+    public Sprite[] GameLostSprites;
     MapGenerator map;
     public float maxDosis;
     public float dosis = 0;
@@ -25,4 +27,11 @@ public class DosisCalculator : MonoBehaviour
         }
     }
 
+    public void GameWonDialog(){
+        DialogHandler.OpenDialogScene(GameWonSprites, ()=> UnityEngine.SceneManagement.SceneManager.LoadScene("Menu"), 0);
+    }
+
+    public void GameLooseDialog(){
+        DialogHandler.OpenDialogScene(GameLostSprites, ()=> UnityEngine.SceneManagement.SceneManager.LoadScene("Menu"), 0);
+    }
 }
