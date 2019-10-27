@@ -23,4 +23,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Resources/Scenes/System/SliderScene.unity
     guid: 2eb1b98b075e06ee99534d7c7a223961
+  - enabled: 1
+    path: Assets/Resources/Scenes/TutorialMenu.unity
+    guid: 4e36811475070db3ead4f70f3948dcff
   m_configObjects: {}
