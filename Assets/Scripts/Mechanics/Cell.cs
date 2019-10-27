@@ -13,6 +13,7 @@ public enum CellTypes
 
 public class Cell : MonoBehaviour
 {
+    public int id;
     public float RadiationImmunity = 1;
     private CellTypes cellType = CellTypes.Empty;
     public CellTypes CellType { 
@@ -45,10 +46,12 @@ public class Cell : MonoBehaviour
 
     Collider2D coll = null;
     private bool needupdate = false;
-    public float hP = 1000;
     public float maxHp = 1000;
+    public float hP = 1000;
+    
     private float sqrt2 = Mathf.Sqrt(2);
     public float HP { get => hP; set => hP = value; }
+    
 
     public Sprite[] deadSprites;
     public Sprite[] goodSprites;
@@ -136,6 +139,7 @@ public class Cell : MonoBehaviour
             if (this.HP <= 0)
             {
                 CellType = CellTypes.Dead;
+                
 
             }
         }
