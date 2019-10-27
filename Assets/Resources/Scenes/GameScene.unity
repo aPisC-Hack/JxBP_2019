@@ -376,7 +376,7 @@ MonoBehaviour:
     type: 3}
   m_PrefabInstance: {fileID: 6124694506076093612}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 2000395069}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 88706cae7b7803f7ebf87db8fdcb66af, type: 3}
@@ -722,6 +722,7 @@ GameObject:
   - component: {fileID: 921396579}
   - component: {fileID: 921396581}
   - component: {fileID: 921396580}
+  - component: {fileID: 921396582}
   m_Layer: 5
   m_Name: Battery
   m_TagString: Untagged
@@ -766,7 +767,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 1186c88eea1a4f961a97a7d8e14c4708, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 367e3de468acd994faf1f19ab5a4ab97, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -784,6 +785,25 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 921396578}
   m_CullTransparentMesh: 0
+--- !u!114 &921396582
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 921396578}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9e389721591e9544893f7d65bece108b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sprites:
+  - {fileID: 21300000, guid: 367e3de468acd994faf1f19ab5a4ab97, type: 3}
+  - {fileID: 21300000, guid: d7d6ffb2be0f78adeb727fb291fc8df6, type: 3}
+  - {fileID: 21300000, guid: 1186c88eea1a4f961a97a7d8e14c4708, type: 3}
+  - {fileID: 21300000, guid: c057f9cf38535582e8fc4124ff75cbfe, type: 3}
+  - {fileID: 21300000, guid: 1e8f33b08f1d607c88d0de99f9e7f9fb, type: 3}
+  lazer: {fileID: 2000395069}
 --- !u!1 &1188183620
 GameObject:
   m_ObjectHideFlags: 0
@@ -1530,6 +1550,12 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1826383966}
   m_CullTransparentMesh: 0
+--- !u!1 &2000395069 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6124694506633426809, guid: ddaa5ccbd0da89a429c0f843fde18b66,
+    type: 3}
+  m_PrefabInstance: {fileID: 6124694506076093612}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &6124694506076093612
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1616,6 +1642,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6124694506182672669, guid: ddaa5ccbd0da89a429c0f843fde18b66,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 6124694506182672670, guid: ddaa5ccbd0da89a429c0f843fde18b66,
         type: 3}

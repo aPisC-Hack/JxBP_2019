@@ -5,6 +5,7 @@ using UnityEngine;
 public class MainMenu : MonoBehaviour
 {
     public Sprite[] exitSprites;
+    public Sprite[] newGameSprites;
     // Start is called before the first frame update
     void Start()
     {
@@ -17,6 +18,10 @@ public class MainMenu : MonoBehaviour
         
     }
 
+    public void NewGame()
+    {
+        DialogHandler.OpenDialogScene(newGameSprites, ()=> UnityEngine.SceneManagement.SceneManager.LoadScene("GameScene"), 0);
+    }
     public void ExitGame(){
         DialogHandler.OpenDialogScene(exitSprites, ()=> Application.Quit(), 1000);
     }
