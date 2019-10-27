@@ -1,6 +1,9 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public enum CellTypes
 {
@@ -16,6 +19,7 @@ public class Cell : MonoBehaviour
     public int id;
     public float RadiationImmunity = 1;
     private CellTypes cellType = CellTypes.Empty;
+    public int[] neighbours = new int[6];
     public CellTypes CellType { 
         get {return cellType;} 
         set{
@@ -106,12 +110,141 @@ public class Cell : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        findNeighbours();
+    }
+
+    private void findNeighbours()
+    {
+        int height = this.gameObject.transform.parent.GetComponent<MapGenerator>().height;
+        int x = Mathf.FloorToInt(id / height);
+        int y = id % height;
+        if(x % 2 == 0)
+        {
+            if (x!=0)
+            {
+                if (y!=0)
+                {
+                    neighbours[0] = (x - 1) * height + y - 1;
+                }
+                if (y!=height)
+                {
+                    neighbours[2] = (x - 1) * height + y + 1;
+                }
+               
+            }
+
+            if (y>0)
+            {
+                neighbours[3] = x * height + y - 1;
+                if (y>-1)
+                {
+                    neighbours[1] = x * height + y - 2;
+
+                }
+            }
+
+            if (y < height)
+            {
+                neighbours[5] = x * height + y + 1;
+
+                if (y < height+1)
+                {
+                    neighbours[4] = x * height + y + 2;
+
+                }
+            }
+            
+        }
+        else
+        {
+            neighbours[0] = x * height + y - 1;
+            neighbours[1] = x * height + y - 2;
+            neighbours[2] = x * height + y + 1;
+            neighbours[3] = (x + 1) * height + y - 1;
+            neighbours[4] = x * height + y + 2;
+            neighbours[5] = (x + 1) * height + y + 1;
+        }
+
+        for (int i = 0; i < 6; i++)
+        {
+            if(neighbours[i] < 0)
+            {
+                neighbours[i] = -1;
+            }
+        }
+    }
+
+
+    /// <summary>
+    /// Visszadja a terjedés valószínűségét
+    /// </summary>
+    /// <param name="GoodHP"></param>
+    /// <param name="CancerHp"></param>
+    /// <param name="MaxHp"></param>
+    /// <returns>Valószínűsség</returns>
+    static double Oraculum_Func(float GoodHP, float CancerHp, float MaxHp)
+    {
+        double balancer = 0.6;
+        return (balancer * CancerHp - GoodHP) / MaxHp;
+
+    }
+    /// <summary>
+    /// Megmondja hogy 2 sejt esetén a jó sejt rákos lesz-e
+    /// </summary>
+    /// <param name="GoodHP"></param>
+    /// <param name="CancerHp"></param>
+    /// <param name="MaxHp"></param>
+    /// <returns>Terjed-e</returns>
+    static bool Will_Spread(float GoodHP, float CancerHp, float MaxHp)
+    {
+        System.Random r = new System.Random();
+        //Debug.Log(Oraculum_Func(GoodHP, CancerHp, MaxHp));
+        double val = Oraculum_Func(GoodHP, CancerHp, MaxHp);
+        double rand = r.NextDouble();
+        return rand < val;
+    }
+
+    int i = 0;
+
+    public void Spread()
+    {
+
+        for (int i = 0; i < 6; i++)
+        {
+            if(neighbours[i] != -1)
+            {
+                List<GameObject> gameObjects = this.gameObject.transform.parent.GetComponent<MapGenerator>().cells;
+                Cell cell = null;
+                int count = 0;
+                while (count < gameObjects.Count && gameObjects[count].gameObject.GetComponent<Cell>().id != neighbours[i])
+                {
+                    count++;
+                }
+                if (count<gameObjects.Count)
+                {
+                    cell = gameObjects[count].gameObject.GetComponent<Cell>();
+                }
+                
+                if (cell != null &&( cell.CellType == CellTypes.Cancer && cellType != CellTypes.Dead && Will_Spread(HP, cell.HP, maxHp)))
+                {
+                    CellType = CellTypes.Cancer;
+
+
+                }
+            }
+        }
+
     }
 
     // Update is called once per frame
     void Update()
     {
+        i++;
+        if (i==150)
+        {
+            Spread();
+            i = 0;
+        }
         if (needupdate)
         {
             float rotation = coll.gameObject.transform.parent.parent.GetComponent<LaserHeadMovement>().Rotation;

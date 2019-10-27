@@ -89,7 +89,7 @@ public class MapGenerator : MonoBehaviour
                         }
                         
                         c.GetComponent<Cell>().id = save.ids[save.ids.IndexOf(i * height + j)];
-                        Debug.Log("ID" + save.ids[save.ids.IndexOf(i * height + j)]);
+                       // Debug.Log("ID" + save.ids[save.ids.IndexOf(i * height + j)]);
                         c.GetComponent<Cell>().CellType = save.cts[save.ids.IndexOf(i * height + j)];
                         c.GetComponent<Cell>().HP = save.hps[save.ids.IndexOf(i * height + j)];
                         cells.Add(c);
@@ -142,7 +142,7 @@ public class MapGenerator : MonoBehaviour
     void Update()
     {
         counter++;
-        Debug.Log(counter);
+      //  Debug.Log(counter);
 
         if (counter == 300)
         {
