@@ -317,6 +317,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   TreatmentFinishedSprites:
   - {fileID: 21300000, guid: d31dba3efd77e3edea049441263b4e95, type: 3}
+  GameWonSprites:
+  - {fileID: 21300000, guid: f7a5e37c2b86e104ea54965b8c833267, type: 3}
+  GameLostSprites:
+  - {fileID: 21300000, guid: aa7bca497a5ba02d8b769be39eaaed63, type: 3}
   maxDosis: 0
   dosis: 0
 --- !u!1 &506969644

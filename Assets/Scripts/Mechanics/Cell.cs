@@ -184,7 +184,7 @@ public class Cell : MonoBehaviour
     /// <returns>Valószínűsség</returns>
     static double Oraculum_Func(float GoodHP, float CancerHp, float MaxHp)
     {
-        double balancer = 2.9;
+        double balancer = 0.6;
         return (balancer * CancerHp - GoodHP) / MaxHp;
 
     }
@@ -273,16 +273,16 @@ public class Cell : MonoBehaviour
                 this.gameObject.transform.parent.GetComponent<MapGenerator>().sums[(int)CellType] += 1;
                 if (this.gameObject.transform.parent.GetComponent<MapGenerator>().sums[(int)CellTypes.Cancer] <=0)
                 {
-                    Debug.Log("NYERTEL");
-                    //el kell dobni a mentést
+                    SaveHandler.DestroySave(MapGenerator.saveid);
+                    transform.parent.GetComponent<DosisCalculator>().GameWonDialog();
                 }
                 else if (this.gameObject.transform.parent.GetComponent<MapGenerator>().sums[(int)CellTypes.Good] <= 0)
                 {
-                    Debug.Log("kevesebb a jó, vesztettél");
+                    transform.parent.GetComponent<DosisCalculator>().GameLooseDialog();
                 }
                 else if (this.gameObject.transform.parent.GetComponent<MapGenerator>().sums[(int)CellTypes.Important] <= 0)
                 {
-                    Debug.Log("kevesebb a fontos, vesztettél");
+                    transform.parent.GetComponent<DosisCalculator>().GameLooseDialog();
                 }
 
 
