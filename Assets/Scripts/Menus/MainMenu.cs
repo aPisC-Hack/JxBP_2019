@@ -25,8 +25,7 @@ public class MainMenu : MonoBehaviour
             if(i != -1){
                 SaveHandler.CreateNewSave(i);
                 MapGenerator.saveid = i;
-                //DialogHandler.OpenDialogScene(newGameSprites, ()=> UnityEngine.SceneManagement.SceneManager.LoadScene("GameScene"), 0);
-                UnityEngine.SceneManagement.SceneManager.LoadScene("GameScene");
+                DialogHandler.OpenDialogScene(newGameSprites, ()=> UnityEngine.SceneManagement.SceneManager.LoadScene("GameScene"), 0);
             }
             else UnityEngine.SceneManagement.SceneManager.LoadScene("Menu");
         });

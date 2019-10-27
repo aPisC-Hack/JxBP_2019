@@ -19,7 +19,6 @@ public class Startup: MonoBehaviour
 
         SaveHandler.LoadSaves();
         DialogHandler.OpenDialogScene(WelcomeSprites, ()=> UnityEngine.SceneManagement.SceneManager.LoadScene("Menu"), 1500);
-        //SliderHandler.OpenScene(WelcomeSprites, (x)=> UnityEngine.SceneManagement.SceneManager.LoadScene("Menu"));
     }
 
     // Update is called once per frame
