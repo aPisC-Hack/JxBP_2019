@@ -227,7 +227,11 @@ public class Cell : MonoBehaviour
                 
                 if (cell != null &&( cell.CellType == CellTypes.Cancer && cellType != CellTypes.Dead && Will_Spread(HP, cell.HP, maxHp)))
                 {
+                    
+                    this.gameObject.transform.parent.GetComponent<MapGenerator>().sums[(int)cell.CellType] -= 1;
                     CellType = CellTypes.Cancer;
+                    this.gameObject.transform.parent.GetComponent<MapGenerator>().sums[(int)cell.CellType] += 1;
+
 
 
                 }
@@ -269,10 +273,25 @@ public class Cell : MonoBehaviour
                 this.HP -= Positron_Damage(distance, intensity, 4);
                // this.HP -= Mathf.Abs(GaussBellDistribution(distance, 1 / 3, intensity)) / 4 / RadiationImmunity;
             }
-            if (this.HP <= 0)
+            if (this.HP <= 0 && CellType != CellTypes.Dead)
             {
-                CellType = CellTypes.Dead;
-                
+                this.gameObject.transform.parent.GetComponent<MapGenerator>().sums[(int)CellType] -= 1;
+                CellType = CellTypes.Dead;                
+                this.gameObject.transform.parent.GetComponent<MapGenerator>().sums[(int)CellType] += 1;
+                if (this.gameObject.transform.parent.GetComponent<MapGenerator>().sums[(int)CellTypes.Cancer] <=0)
+                {
+                    Debug.Log("NYERTEL");
+                    //el kell dobni a mentést
+                }
+                else if (this.gameObject.transform.parent.GetComponent<MapGenerator>().sums[(int)CellTypes.Good] <= 0)
+                {
+                    Debug.Log("kevesebb a jó, vesztettél");
+                }
+                else if (this.gameObject.transform.parent.GetComponent<MapGenerator>().sums[(int)CellTypes.Important] <= 0)
+                {
+                    Debug.Log("kevesebb a fontos, vesztettél");
+                }
+
 
             }
         }

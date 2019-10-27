@@ -7,6 +7,7 @@ using System.IO;
 public class MapGenerator : MonoBehaviour
 {
     public List<GameObject> cells = new List<GameObject>();
+    public int[] sums= new int[5];
     public GameObject cell;
     public int width = 5, height = 5;
     public static int saveid=0;
@@ -53,6 +54,7 @@ public class MapGenerator : MonoBehaviour
                         c.GetComponent<Cell>().id = save.ids[save.ids.IndexOf(i * height + j)];
                        // Debug.Log("ID" + save.ids[save.ids.IndexOf(i * height + j)]);
                         c.GetComponent<Cell>().CellType = save.cts[save.ids.IndexOf(i * height + j)];
+                        sums[(int)c.GetComponent<Cell>().CellType] += 1;
                         c.GetComponent<Cell>().HP = save.hps[save.ids.IndexOf(i * height + j)];
                         cells.Add(c);
                     }
