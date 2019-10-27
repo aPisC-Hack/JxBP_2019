@@ -69,15 +69,21 @@ public class Cell : MonoBehaviour
     float GaussBellDistribution(float x, float ex, float d2x)
     {
         d2x = 1/d2x;
-        return 2500*Mathf.Exp(-Mathf.Pow((x - ex), 2) / 2 * d2x) / (Mathf.Sqrt(Mathf.PI*Mathf.Sqrt(d2x)));
+        return 40*Mathf.Exp(-Mathf.Pow((x - ex), 2) / 2 * d2x) / (Mathf.Sqrt(Mathf.PI*Mathf.Sqrt(d2x)));
         
+    }
+    float Fixed_GaussBellDistribution(float x, float ex, float d2x)
+    {
+        d2x = 1 / d2x;
+        return 2500 * Mathf.Exp(-Mathf.Pow((x - ex), 2) / 2 * d2x) / (Mathf.Sqrt(Mathf.PI * Mathf.Sqrt(d2x)));
+
     }
 
     float Electron_Damage(float dist, float power)
     {
-        return GaussBellDistribution(dist*(float)0.5, 1/3, power/2000);
+        return Fixed_GaussBellDistribution(dist*(float)0.3, 1/3, power/200);
     }
-    float Positron_Damage(float dist, float power, float maxdist)
+    float Proton_Damage(float dist, float power, float maxdist)
     {
         if (dist>maxdist)
         {
@@ -240,7 +246,7 @@ public class Cell : MonoBehaviour
     {
         if (type == 0)
         {
-            return Mathf.Abs(GaussBellDistribution(dist, 1 / 3, power)) / 4 / RadiationImmunity;
+            return Mathf.Abs(GaussBellDistribution(dist, 1 / 7, power)) / RadiationImmunity;
         }
         else if (type == 1)
         {
@@ -248,7 +254,7 @@ public class Cell : MonoBehaviour
         }
         else if (type == 2)
         {
-            return Positron_Damage(dist, power, 4)/ RadiationImmunity;
+            return Proton_Damage(dist, power, 4)/ RadiationImmunity;
         }
 
         return 0;
@@ -278,7 +284,7 @@ public class Cell : MonoBehaviour
                 coll = null;
             }
             if(this.HP > 0){
-                float dosis = calculateDosis(distance, intensity, 2);
+                float dosis = calculateDosis(distance, intensity, 1);
                 this.HP -= dosis;
                 transform.parent.GetComponent<DosisCalculator>().addDosis(dosis);
                // this.HP -= Mathf.Abs(GaussBellDistribution(distance, 1 / 3, intensity)) / 4 / RadiationImmunity;
