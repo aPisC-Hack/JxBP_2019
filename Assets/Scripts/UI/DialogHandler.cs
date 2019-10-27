@@ -45,6 +45,14 @@ public class DialogHandler : MonoBehaviour
 
     }
 
+    public void SkipDialogs(){
+        if(currentDialog != null){
+            Destroy(currentDialog);
+            currentDialog = null;
+        }
+        if(then != null)then();
+    }
+
     // Start is called before the first frame update
     void Start()
     {
