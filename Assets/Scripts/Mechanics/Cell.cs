@@ -86,8 +86,12 @@ public class Cell : MonoBehaviour
     {
         return Fixed_GaussBellDistribution(dist * (float)0.3, 1 / 3, power / 200);
     }
-    float Proton_Damage(float dist, float power, float maxdist)
+    float Proton_Damage(float dist, float power, float maxdist, float mindist)
     {
+        if (dist < mindist )
+        {
+            return 0;
+        }
         if (dist > maxdist)
         {
             return 0;
@@ -259,7 +263,10 @@ public class Cell : MonoBehaviour
         }
         else if (type == 2)
         {
-            return Proton_Damage(dist, power, 4) / RadiationImmunity;
+            Debug.Log("dist " + dist);
+            Debug.Log("pow " + power);
+            return Proton_Damage(dist, power, 3 * power/4, 2) / RadiationImmunity;
+           
         }
 
         return 0;
