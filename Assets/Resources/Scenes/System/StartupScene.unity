@@ -218,3 +218,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   WelcomeSprites:
   - {fileID: 21300000, guid: aa86cd550808f81bb8659e83c57f4eac, type: 3}
+  - {fileID: 21300000, guid: ac1e543918abd49e6b27e9546382a3dc, type: 3}
