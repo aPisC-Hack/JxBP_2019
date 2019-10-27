@@ -5,8 +5,10 @@ using UnityEngine;
 public class MainMenu : MonoBehaviour
 {
     public Sprite[] exitSprites;
-    public Sprite[] newGameSprites;
+    public Sprite[] TutorialSprites;
     public Sprite[] characterSprites;
+
+    public Sprite[] FunfactSprites;
     // Start is called before the first frame update
     void Start()
     {
@@ -25,7 +27,9 @@ public class MainMenu : MonoBehaviour
             if(i != -1){
                 SaveHandler.CreateNewSave(i);
                 MapGenerator.saveid = i;
-                DialogHandler.OpenDialogScene(newGameSprites, ()=> UnityEngine.SceneManagement.SceneManager.LoadScene("GameScene"), 0);
+                Sprite[] ff = new Sprite[1];
+                ff[0] = FunfactSprites[Random.Range(0, FunfactSprites.Length)];
+                DialogHandler.OpenDialogScene(ff, ()=> UnityEngine.SceneManagement.SceneManager.LoadScene("GameScene"), 0);
             }
             else UnityEngine.SceneManagement.SceneManager.LoadScene("Menu");
         });
@@ -42,8 +46,10 @@ public class MainMenu : MonoBehaviour
         SliderHandler.OpenScene(sp, (i)=>{
             if(i != -1){
                 MapGenerator.saveid = i;
-                //DialogHandler.OpenDialogScene(newGameSprites, ()=> UnityEngine.SceneManagement.SceneManager.LoadScene("GameScene"), 0);
-                UnityEngine.SceneManagement.SceneManager.LoadScene("GameScene");
+                Sprite[] ff = new Sprite[1];
+                ff[0] = FunfactSprites[Random.Range(0, FunfactSprites.Length)];
+                DialogHandler.OpenDialogScene(ff, ()=> UnityEngine.SceneManagement.SceneManager.LoadScene("GameScene"), 0);
+                //UnityEngine.SceneManagement.SceneManager.LoadScene("GameScene");
             }
             else UnityEngine.SceneManagement.SceneManager.LoadScene("Menu");
         });
@@ -53,6 +59,7 @@ public class MainMenu : MonoBehaviour
         DialogHandler.OpenDialogScene(exitSprites, ()=> Application.Quit(), 1000);
     }
 
-    public void Settings(){
+    public void Tutorial(){
+         UnityEngine.SceneManagement.SceneManager.LoadScene("TutorialMenu");
     }
 }
