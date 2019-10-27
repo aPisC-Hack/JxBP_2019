@@ -236,6 +236,23 @@ public class Cell : MonoBehaviour
         }
 
     }
+    float calculateDosis(float dist, float power, int type)
+    {
+        if (type == 0)
+        {
+            return Mathf.Abs(GaussBellDistribution(dist, 1 / 3, power)) / 4 / RadiationImmunity;
+        }
+        else if (type == 1)
+        {
+            return Electron_Damage(dist, power)/ RadiationImmunity;
+        }
+        else if (type == 2)
+        {
+            return Positron_Damage(dist, power, 4)/ RadiationImmunity;
+        }
+
+        return 0;
+    }
 
     // Update is called once per frame
     void Update()
@@ -261,7 +278,7 @@ public class Cell : MonoBehaviour
                 coll = null;
             }
             if(this.HP > 0){
-                float dosis = Positron_Damage(distance, intensity, 4);
+                float dosis = calculateDosis(distance, intensity, 2);
                 this.HP -= dosis;
                 transform.parent.GetComponent<DosisCalculator>().addDosis(dosis);
                // this.HP -= Mathf.Abs(GaussBellDistribution(distance, 1 / 3, intensity)) / 4 / RadiationImmunity;
