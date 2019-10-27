@@ -35,7 +35,7 @@ public class MapGenerator : MonoBehaviour
             }
         }
 
-        float size = radius * 2.6f;
+        float size = radius * 2.8f;
         float diff = 2 / size;
         transform.localScale = new Vector3(diff, diff, 1);
     }
