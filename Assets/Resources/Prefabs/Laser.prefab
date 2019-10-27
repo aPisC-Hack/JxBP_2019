@@ -193,7 +193,7 @@ MonoBehaviour:
   - 2
   - 4
   - 6
-  - 100
+  - 12
   Radioation: {fileID: 6027302013136906175, guid: 54a9bd3e1d1249069815158150f5c2de,
     type: 3}
   RadiationPivot: {fileID: 3391515788976625755}
