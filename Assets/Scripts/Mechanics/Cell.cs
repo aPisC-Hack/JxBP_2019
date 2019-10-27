@@ -246,7 +246,8 @@ public class Cell : MonoBehaviour
 
             //Debug.Log("New: "+newdistance);
             //Debug.Log("Old: " + distance);
-            if(this.HP > 0 && needupdate && coll != null){
+            try{
+            if(this.HP > 0 && needupdate && coll != null && coll.gameObject.transform.parent.parent.GetComponent<LaserHeadMovement>() != null){
                 float intensity = coll.gameObject.transform.parent.GetComponent<Radiation>().Intensity;
                 if(intensity == 0){
                     needupdate = false;
@@ -266,6 +267,7 @@ public class Cell : MonoBehaviour
                 transform.parent.GetComponent<DosisCalculator>().addDosis(dosis);
                // this.HP -= Mathf.Abs(GaussBellDistribution(distance, 1 / 3, intensity)) / 4 / RadiationImmunity;
             }
+            }catch{}
             if (this.HP <= 0 && CellType != CellTypes.Dead)
             {
                 this.gameObject.transform.parent.GetComponent<MapGenerator>().sums[(int)CellType] -= 1;
