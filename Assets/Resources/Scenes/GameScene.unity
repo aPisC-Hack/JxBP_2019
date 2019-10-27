@@ -1153,9 +1153,8 @@ GameObject:
   - component: {fileID: 1341888640}
   - component: {fileID: 1341888639}
   - component: {fileID: 1341888638}
-  - component: {fileID: 1341888637}
   m_Layer: 5
-  m_Name: TurnRightButton (1)
+  m_Name: RadiationButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1180,32 +1179,6 @@ RectTransform:
   m_AnchoredPosition: {x: 101, y: 83}
   m_SizeDelta: {x: 150, y: 150}
   m_Pivot: {x: 0.5, y: 0}
---- !u!114 &1341888637
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1341888635}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: df3cb6b30a3c88af796b98dd25403cee, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_OnPressed:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 567823319}
-        m_MethodName: Rotate
-        m_Mode: 4
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0.01
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!114 &1341888638
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1248,7 +1221,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1341888639}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 567823319}
+        m_MethodName: ToggleRadiation
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1341888639
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1267,7 +1251,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: a69c37832feeef9ad9228ca50e763ed4, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 2e24d8ea8281151938adf93ae4d3f216, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1

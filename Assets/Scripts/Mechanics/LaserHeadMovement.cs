@@ -7,6 +7,11 @@ public class LaserHeadMovement : MonoBehaviour
 {
     public enum RadiationTypes {Gamma, Electron, Proton}
     
+    public Sprite[] HeadSprites;
+    public Sprite[] ArmSprites;
+
+    public GameObject Head, Arm;
+
     public float Rotation;
     public RadiationTypes RadiationType { get; set; }
     public float[] Intensities = new float[]{0 , 2, 4, 6, 100};
@@ -19,6 +24,9 @@ public class LaserHeadMovement : MonoBehaviour
     }
     private float sqrt2 = Mathf.Sqrt(2);
 
+    public void ToggleRadiation(){
+        RadiationType = (RadiationTypes) ((((int)RadiationType + 1)) % 3);
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -30,6 +38,9 @@ public class LaserHeadMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        Head.GetComponent<SpriteRenderer>().sprite = HeadSprites[(int) RadiationType];
+        Arm.GetComponent<SpriteRenderer>().sprite = ArmSprites[(int) RadiationType];
+
         Vector3 psc = transform.parent.lossyScale;
         transform.localPosition = new Vector3(
             Mathf.Clamp(Mathf.Sin(Rotation) * sqrt2 * 1, -1, 1) ,
