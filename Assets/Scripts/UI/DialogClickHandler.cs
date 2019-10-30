@@ -18,7 +18,17 @@ public class DialogClickHandler : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(dh.Timeout > 0 && (DateTime.Now - datetime).TotalMilliseconds > dh.Timeout){
+        
+        if (dh.Timeout > 0 && (DateTime.Now - datetime).TotalMilliseconds > dh.Timeout)
+        {
+            LoadNext();
+        }
+    }
+
+    public void checkClickAllowed()
+    {
+        if (dh.ClickAllowed)
+        {
             LoadNext();
         }
     }
