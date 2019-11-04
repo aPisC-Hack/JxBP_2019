@@ -11,10 +11,13 @@ public class SliderHandler : MonoBehaviour
     private static Action<int> crossSceneAfter = null;
 
     public static void OpenScene(IList<Sprite> sprites, Action<int> then){
-        UnityEngine.SceneManagement.SceneManager.LoadScene("SliderScene");
-        DialogHandler dh = GameObject.FindObjectOfType<DialogHandler>();
-        crossSceneAfter = then;
-        crossSceneSprites = sprites;
+        if(sprites == null || sprites.Count == 0) then(-1);
+        else{
+            UnityEngine.SceneManagement.SceneManager.LoadScene("SliderScene");
+            DialogHandler dh = GameObject.FindObjectOfType<DialogHandler>();
+            crossSceneAfter = then;
+            crossSceneSprites = sprites;
+        }
     }
     public GameObject DialogFrame;
 

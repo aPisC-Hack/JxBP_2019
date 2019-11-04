@@ -18,20 +18,20 @@ public class DosisCalculator : MonoBehaviour
     }
 
     public void addDosis(float dosis){
-        maxDosis = map.width * map.height * 50;
+        maxDosis = map.width * map.height * 65;
         this.dosis+= dosis;
         if(this.dosis >= maxDosis){
             MapGenerator m = GetComponent<MapGenerator>();
             SaveHandler.SaveGame(MapGenerator.saveid, m.width, m.height, m.cells);
-            DialogHandler.OpenDialogScene(TreatmentFinishedSprites, ()=> UnityEngine.SceneManagement.SceneManager.LoadScene("Menu"), 0);
+            DialogHandler.OpenDialogScene(TreatmentFinishedSprites, ()=> UnityEngine.SceneManagement.SceneManager.LoadScene("Menu"), 3000, false);
         }
     }
 
     public void GameWonDialog(){
-        DialogHandler.OpenDialogScene(GameWonSprites, ()=> UnityEngine.SceneManagement.SceneManager.LoadScene("Menu"), 0);
+        DialogHandler.OpenDialogScene(GameWonSprites, ()=> UnityEngine.SceneManagement.SceneManager.LoadScene("Menu"), 3000, false);
     }
 
     public void GameLooseDialog(){
-        DialogHandler.OpenDialogScene(GameLostSprites, ()=> UnityEngine.SceneManagement.SceneManager.LoadScene("Menu"), 0);
+        DialogHandler.OpenDialogScene(GameLostSprites, ()=> UnityEngine.SceneManagement.SceneManager.LoadScene("Menu"), 3000, false);
     }
 }

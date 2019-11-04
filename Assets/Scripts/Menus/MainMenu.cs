@@ -37,15 +37,17 @@ public class MainMenu : MonoBehaviour
 
     public void Continue(){
         List<Sprite> sp = new List<Sprite>();
+        List<int> ids = new List<int>();
         for(int i = 0; i < characterSprites.Length; i++){
             if(SaveHandler.GetSave(i) !=  null){
                 sp.Add(characterSprites[i]);
+                ids.Add(i);
             }
         }
 
         SliderHandler.OpenScene(sp, (i)=>{
             if(i != -1){
-                MapGenerator.saveid = i;
+                MapGenerator.saveid = ids[i];
                 Sprite[] ff = new Sprite[1];
                 ff[0] = FunfactSprites[Random.Range(0, FunfactSprites.Length)];
                 DialogHandler.OpenDialogScene(ff, ()=> UnityEngine.SceneManagement.SceneManager.LoadScene("GameScene"), 0);
