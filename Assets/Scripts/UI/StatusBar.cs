@@ -23,8 +23,9 @@ public class StatusBar : MonoBehaviour
         for (int i = 0; i < Parts.Length; i++)
         {
             float v = i < values.Length ? values[i] : 0;
-            Parts[i].anchoredPosition = new Vector3(f * GetComponent<RectTransform>().sizeDelta.x, 0, 0);
-            Parts[i].localScale = new Vector3(v, 1, 1);
+            
+            Parts[i].anchorMin = new Vector2(f, 0);
+            Parts[i].anchorMax = new Vector2(f+v, 1);
 
             f+= v;
         }
@@ -34,8 +35,8 @@ public class StatusBar : MonoBehaviour
         this.values = values;
     }
 
-    public void UpdateSlider(float v1){
+    /*public void UpdateSlider(float v1){
         UpdateSlider(new float[] {v1, 1-v1});
-    }
+    }*/
 
 }
